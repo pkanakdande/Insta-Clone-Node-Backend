@@ -16,7 +16,7 @@ app.use(express.urlencoded({extended:true}))
 const client=new MongoClient(process.env.DB_URL)
 
 app.get("/postdata/:file",async(req,res)=>{
-    console.log(req.file)
+    // console.log(req.file)
     try{
          await client.connect()
          const database=client.db(process.env.DATABASE)
@@ -44,14 +44,14 @@ app.get("/postdata/:file",async(req,res)=>{
 const Storage=new GridFsStorage({
     url:process.env.DB_URL + process.env.DATABASE,
     file:(req,file)=>{
-        console.log(file)
+        // console.log(file)
         return {
             bucketName:process.env.PHOTOCOLLECTION,
             fileName:`${Date.now()}_${file.originalname}`
         }
     }
 })
-console.log(Storage)
+// console.log(Storage)
 const upload=multer({
     storage:Storage
 })
@@ -73,7 +73,7 @@ app.get("/postdata",async(req,res)=>{
 
 app.post("/postdata",upload.single("PostImage"),async(req,res)=>{
     try{
-     console.log(req.body)
+    //  console.log(req.body)
      const createschema= await new dbModel({
         name:req.body.name,
         location:req.body.location,
